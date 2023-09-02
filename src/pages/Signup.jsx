@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword,
+  GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 const SignupPages = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,6 +11,9 @@ const SignupPages = () => {
     createUserWithEmailAndPassword(auth, email, password).then((value) =>
       alert("sucess")
     );
+  };
+  const signupWithGoogle = () => {
+    signInWithPopup(auth, googleProvider);
   };
   return (
     <div className="signup-page">
@@ -28,6 +33,8 @@ const SignupPages = () => {
         required
         placeholder="Enter your pswrd here"
       />
+      <br/>
+      <button onClick={signupWithGoogle}>Sigin with Google</button>
       <button onClick={createUser}>signup</button>
     </div>
   );
